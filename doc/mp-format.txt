@@ -1,0 +1,108 @@
+CDSb PM from Dr. TerrorZ, 2020-09-03:
+-------------------------------------
+
+Hi,
+
+I'll copy paste one explanation I gave before.
+I've been meaning to give a more definite format explanation but... :/
+
+***
+
+There's a bit vague definition for the Bin file in the source for my own purposes.
+
+Sadly I never gave much thought to the format so it is what it is.
+
+It is simply a chunk of 88000 bytes, with fixed offsets for various things.
+
+The bitmap is from 1024 onwards, the colormap (1000 bytes) is from 65536 onwards.
+
+Now, if the mode is multicolor, then then the second colormap I think is at 65536+40*25 and the third again 1000 bytes from that. (All are separated and have 0-15 values, unlike C64 which combines two and has the $d800 colormap separately)
+
+The "correct" way to get that second address would be to take the values from offset 5 and 7 and have 65536+XSIZE*YSIZE
+
+The size of image is at offsets 5 & 7 but in character sizes. So 320x200 image is 40 and 25.
+
+(This doesn't mean that Multipaint can load in flexible sized screens, at least now.)
+
+Also if you need to check if the file is a Multipaint bin file, checking the 'M' and 'P' ascii values at offset 10 & 11 can help. (But I only made that from 2019 onwards)
+
+You can examine C64 hires and multicolor files and check what is at offset 3, probably 0 for hires and 10 for multicolor.
+
+But if you are working on internal tools it probably doesn't matter that much, the other things can be ignored.
+
+Yes the bitmap is not in C64 format, each bit is represented by a byte, so you'll have to combine 8 bytes to make the bits of one byte. Wasteful, yes.
+
+
+
+// BIN specs
+// g_map[88000] parameters
+// 0 border
+// 1 background (c64/plus4 multicolor 0)
+// 2 background 2 (plus4 multicolor 1)
+// 3 MODE variable = which MODE?
+// 4 max colors-1 (255=max)
+// 5 (xres/8)=MX
+// 6 0
+// 7 (yres/8)=MY
+// 8 0
+// 9 0
+// 10 'M' <-since 2019
+// 11 'P' <-since 2019
+// 12 tool # shortcut
+// 13 machine colorsystem (e.g C64)
+// 14 paintmode (for palette systems)
+// 15
+// 16 Image preference bits 128=,129=,130=,131,132,133,134,135
+// 17 General preference bits 136=border,137=hexify,138=pixelgrid,139,140,141,142,143 (mirrored?)
+// 32-95 Internal stored export filename for autput export
+// 240 palette range #0 start
+// 241 palette range #0 end
+// 242 palette range #1 start
+// 243 palette range #1 end
+// 244 palette range #2 start
+// 245 palette range #2 end
+// 246 palette range #3 start
+// 247 palette range #3 end
+// 256-1023 palette R,G,B 8-bit definitions (none present if not paletted mode)
+// 1024- bitmap etc definitions
+// 65536- typically, 8x8 attributes, but can have 2 colormaps
+
+// 01 23 45 67
+// po=ad[0]+ad[1]*2;
+
+// 00 00 00 00 0 zeroc g_map[1]
+// 10 10 10 10 1 cad+1000
+// 01 01 01 01 2 cad
+// 11 11 11 11 3 cad+2000
+
+
+
+CDSb PM from Dr. TerrorZ, 2020-09-07:
+-------------------------------------
+
+>> Hi,
+>>
+>> I'll copy paste one explanation I gave before.
+>> I've been meaning to give a more definite format explanation but... :/
+>>
+> <snip>
+>> The bitmap is from 1024 onwards
+> <snip>
+>> Yes the bitmap is not in C64 format, each bit is represented by a byte, so you'll have to combine 8 bytes to make the bits of one byte. Wasteful, yes.
+>
+> So does that mean that if I combine those eight booleans into a byte, it has the correct bitpairs for the videoram and colorram?
+
+No the colorram is in separate blocks after the bitmap.
+
+The bitmap is 320x200 bytes (both in multicolor and hires). If the byte is 0 = 0bit, bytes is 1 = 1bit.
+
+So if you want to know the bit under coordinates 128,128, you have it from offset 1024+128+128*320 , so 1024+X+Y*WIDTH (X=0-319, Y=0-199, WIDTH=320). This works both for multicolor and hires, and you need to combine the bits afterwards for multicolor to make the 0-3 index.
+
+I think I misremembered the colorram thing.
+
+If you want the colorram from one location, you need to take
+offset 65536+CX+CY*CWIDTH (CX=0-39, CY=0-24, CWIDTH=40)
+The second colorram (for multicolor) is at 65536+1000+CX+CY*CWIDTH
+
+I hope this was helpful...
+
