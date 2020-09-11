@@ -7,5 +7,5 @@ mp-to-koa
 show_koala.prg
 
 # files generated when running the code
-logo-topleft.koa
+*.koa
 

@@ -7,7 +7,7 @@
         COLRAM = $1000
 
         ; Needs work to allow showing other files
-        KOALA_FILE = "../logo-topleft.koa"
+        KOALA_FILE = "../focus-3d.koa"
 
 
         * = $0801

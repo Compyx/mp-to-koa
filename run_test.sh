@@ -2,6 +2,9 @@
 #
 # Script to test converting a Multipaint .bin file to a Koala file
 
+MP_FILE=data/focus-3d.bin
+KOA_FILE=focus-3d.koa
+
 
 # Show usage message
 usage()
@@ -31,7 +34,7 @@ if [ "$?" != "0" ]; then
 fi
 
 # Run converter
-./mp-to-koa data/logo-topleft.bin logo-topleft.koa
+./mp-to-koa ${MP_FILE} ${KOA_FILE}
 if [ "$?" != "0" ]; then
     exit 1
 fi
