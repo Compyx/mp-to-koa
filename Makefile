@@ -17,7 +17,11 @@ CFLAGS = -Wall -Wextra -std=c99 -O2 -g \
 
 TARGET_OBJS = main.o
 
-TARGET_EXE = mp-to-koa
+ifeq ($(OS),Windows_NT)
+	TARGET_EXE = mp-to-koa.exe
+else
+	TARGET_EXE = mp-to-koa
+endif
 
 SHOW_KOALA = show_koala.prg
 
