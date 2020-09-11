@@ -1,7 +1,7 @@
 /* vim: set et ts=4 sts=4 sw=4 fdm=marker syntax=c.doxygen: */
 
 /** \file   main.c
- * \brief   Convert multipaint bin to Koala
+ * \brief   Convert multipaint .bin to Koala
  * \author  Bas Wassink <b.wassink@ziggo.nl>
  */
 
@@ -13,27 +13,41 @@
 #include <errno.h>
 
 
+/** \brief  Program name */
 #define PRG_NAME            "mp-to-koa"
+/** \brief  Program version */
 #define PRG_VERSION         "0.1"
 
+
+/** \brief  Koala file size, excluding load address */
 #define KOA_SIZE            10001
+/** \brief  Koala bitmap size */
 #define KOA_BITMAP_SIZE     8000
+/** \brief  Koala bitmap offset */
 #define KOA_BITMAP_OFFSET   0
+/** \brief  Koala videoram size */
 #define KOA_VIDRAM_SIZE     1000
+/** \brief  Koala videoram offset */
 #define KOA_VIDRAM_OFFSET   8000
+/** \brief  Koala colorram size */
 #define KOA_COLRRAM_SIZE    1000
+/** \brief  Koala colorram offset */
 #define KOA_COLRAM_OFFSET   9000
+/** \brief  Koala background color offset */
 #define KOA_BGCOLOR_OFFSET  10000
 
 
+/** \brief  Multipaint file size */
 #define MP_SIZE             88000
+/** \brief  Multipaint bitmap offset */
 #define MP_BITMAP_OFFSET    1024
-
-/** \brief  Bitmap size: 1 byte per pixel */
+/** \brief  Multipaint bitmap size: 1 byte per pixel */
 #define MP_BITMAP_SIZE      (40 * 25 * 8 * 8)
-
+/** \brief  Multipaint videoram-lo offset */
 #define MP_VIDRAM_LO_OFFSET 65536
+/** \brief  Multipaint videoram-hi offset */
 #define MP_VIDRAM_HI_OFFSET (MP_VIDRAM_LO_OFFSET + 1000)
+/** \brief  Multipaint colorram offset */
 #define MP_COLRAM_OFFSET    (MP_VIDRAM_HI_OFFSET + 1000)
 
 
