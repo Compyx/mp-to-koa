@@ -23,7 +23,7 @@ if [ ! -z "$1" ]; then
         exit 1
     fi
     echo "Setting emu bin to $1"
-    X64SC="$1"
+    X64="$1"
 fi
 
 
