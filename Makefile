@@ -7,7 +7,8 @@ VPATH = src
 ASM = 64tass
 ASM_FLAGS = --case-sensitive --ascii --m6502 -Wshadow -Wbranch-page
 CC = gcc
-LD = gcc
+# CC = clang-10
+LD = $(CC)
 CFLAGS = -Wall -Wextra -std=c99 -O2 -g \
 	 -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align \
 	 -Wstrict-prototypes -Wmissing-prototypes \
