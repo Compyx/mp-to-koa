@@ -7,7 +7,7 @@
         COLRAM = $1000
 
         ; Needs work to allow showing other files
-        KOALA_FILE = "../focus-3d.koa"
+        ; KOALA_FILE = "../focus-3d.koa"
 
 
         * = $0801
@@ -44,10 +44,10 @@ init
         jmp *
 
         * = BITMAP
-        .binary KOALA_FILE, 2, 8000
+        .binary format("%s", KOALA_FILE), 2, 8000
 
         * = VIDRAM
-        .binary KOALA_FILE, 2 + 8000, 1000
+        .binary format("%s", KOALA_FILE), 2 + 8000, 1000
 
         * = COLRAM
         ; add 1 more byte to grab the background color

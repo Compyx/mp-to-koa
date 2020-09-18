@@ -40,7 +40,7 @@ if [ "$?" != "0" ]; then
 fi
 
 # Generate C64 binary to show result
-make -B show_koala.prg
+make -B KOALA='\"../focus-3d.koa\"' show_koala.prg
 if [ "$?" != "0" ]; then
     exit 1
 fi

@@ -30,7 +30,7 @@ all: $(TARGET_EXE)
 
 
 $(SHOW_KOALA): src/show_koala.s
-	$(ASM) $(ASM_FLAGS) -o $@ $<
+	$(ASM) $(ASM_FLAGS) -D KOALA_FILE=$(KOALA) -o $@ $<
 
 $(TARGET_EXE): $(TARGET_OBJS)
 	$(LD) -o $@ $^

@@ -9,3 +9,6 @@ show_koala.prg
 # files generated when running the code
 *.koa
 
+# doc files
+*.htm[l]
+
